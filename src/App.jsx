@@ -1,11 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom'
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { LaptopOutlined, NotificationOutlined, UserOutlined, FileOutlined, PieChartOutlined, DesktopOutlined, TeamOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 const axios = require('axios').default;
+
+function getItem(label, key, icon, children) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  };
+}
+
+const items = [
+  getItem('Home', '1',  <DesktopOutlined />),
+  getItem('Analysis', '2', <PieChartOutlined />),
+  getItem('Data', '3', <FileOutlined />),
+  getItem('User', 'sub1', <UserOutlined />, [
+    getItem('Profile', '4'),
+    getItem('Financial plan', '5'),
+    getItem('Setting', '6'),
+  ]),
+  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '7'), getItem('Team 2', '8')]),
+];
 
 const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
   const key = String(index + 1);
@@ -33,6 +54,8 @@ const App = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const [collapsed, setCollapsed] = useState(false);
+
   // navigate to 'home' page
   // const goHome = () => {
   //   setCurrent("1")
@@ -45,37 +68,87 @@ const App = () => {
   //   navigate('/userprofile', {})
   // }
   return (
-    <Layout>
-      <Header className="header">
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-          <Menu.Item key="1">Home</Menu.Item>
-          <Menu.Item key="2">Analysis</Menu.Item>
-          <Menu.Item key="3">Data</Menu.Item>
-          <Menu.Item key="4">User Profile</Menu.Item>
-        </Menu>
-      </Header>
-      <Layout>
-        <Sider
-          width={200}
+    // <Layout>
+    //   <Header className="header">
+    //     <div className="logo" />
+    //     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+    //       <Menu.Item key="1">Home</Menu.Item>
+    //       <Menu.Item key="2">Analysis</Menu.Item>
+    //       <Menu.Item key="3">Data</Menu.Item>
+    //       <Menu.Item key="4">User Profile</Menu.Item>
+    //     </Menu>
+    //   </Header>
+    //   <Layout>
+    //     <Sider
+    //       width={200}
+    //       style={{
+    //         background: colorBgContainer,
+    //       }}
+    //     >
+    //       <Menu
+    //         mode="inline"
+    //         defaultSelectedKeys={['1']}
+    //         defaultOpenKeys={['sub1']}
+    //         style={{
+    //           height: '100%',
+    //           borderRight: 0,
+    //         }}
+    //         items={items2}
+    //       />
+    //     </Sider>
+    //     <Layout
+    //       style={{
+    //         padding: '0 24px 24px',
+    //       }}
+    //     >
+    //       <Breadcrumb
+    //         style={{
+    //           margin: '16px 0',
+    //         }}
+    //       >
+    //         <Breadcrumb.Item>Home</Breadcrumb.Item>
+    //         <Breadcrumb.Item>List</Breadcrumb.Item>
+    //         <Breadcrumb.Item>App</Breadcrumb.Item>
+    //       </Breadcrumb>
+    //       <Content
+    //         style={{
+    //           padding: 24,
+    //           margin: 0,
+    //           minHeight: 280,
+    //           background: colorBgContainer,
+    //         }}
+    //       >
+    //         Content
+    //       </Content>
+    //     </Layout>
+    //   </Layout>
+    // </Layout>
+
+    <Layout
+      style={{
+        minHeight: '100vh',
+      }}
+    >
+      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+        <div
           style={{
+            height: 32,
+            margin: 16,
+            background: 'rgba(255, 255, 255, 0.2)',
+          }}
+        />
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+      </Sider>
+      <Layout className="site-layout">
+        <Header
+          style={{
+            padding: 0,
             background: colorBgContainer,
           }}
-        >
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{
-              height: '100%',
-              borderRight: 0,
-            }}
-            items={items2}
-          />
-        </Sider>
-        <Layout
+        />
+        <Content
           style={{
-            padding: '0 24px 24px',
+            margin: '0 16px',
           }}
         >
           <Breadcrumb
@@ -83,21 +156,26 @@ const App = () => {
               margin: '16px 0',
             }}
           >
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            <Breadcrumb.Item>User</Breadcrumb.Item>
+            <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
-          <Content
+          <div
             style={{
               padding: 24,
-              margin: 0,
-              minHeight: 280,
+              minHeight: 360,
               background: colorBgContainer,
             }}
           >
-            Content
-          </Content>
-        </Layout>
+            Bill is a cat.
+          </div>
+        </Content>
+        <Footer
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          Ant Design ©2023 Created by Ant UED
+        </Footer>
       </Layout>
     </Layout>
   );
