@@ -50,7 +50,8 @@ const ProfileSetting = () => {
                     }}
                 >
                     <Breadcrumb.Item>Financial Self-Planning</Breadcrumb.Item>
-                    <Breadcrumb.Item>UserProfile</Breadcrumb.Item>
+                    <Breadcrumb.Item>User</Breadcrumb.Item>
+                    <Breadcrumb.Item>User Profile</Breadcrumb.Item>
                 </Breadcrumb>
                 <div
                     style={{
@@ -59,7 +60,7 @@ const ProfileSetting = () => {
                         background: colorBgContainer,
                     }}
                 >
-                    <Title level={2} style={{ color: 'blue' }}>Profile</Title>
+                    <Title level={2} style={{ color: 'blue' }}>User Profile</Title>
                     <Title level={4} style={{ color: 'black' }}>Family Members</Title>
                     <div>
                         <Space wrap>
@@ -76,7 +77,7 @@ const ProfileSetting = () => {
                             <p style={{ marginRight: '20px' }}>default</p>
                             <p>Amount:</p>
                             <p style={{ marginRight: '20px' }}>default</p>
-                            <p>Frequency</p>
+                            <p>Frequency:</p>
                             <p>default</p>
                         </Space>
                     </div>
@@ -115,7 +116,6 @@ const ProfileSetting = () => {
                             <p style={{ marginRight: '20px' }}>default</p>
                         </Space>
                     </div>
-                    <Button type="primary">Submit</Button>
                 </div>
             </Content>
             <Footer

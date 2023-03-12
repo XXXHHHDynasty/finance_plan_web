@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom'
 import { LaptopOutlined, NotificationOutlined, UserOutlined, FileOutlined, PieChartOutlined, DesktopOutlined, TeamOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -81,62 +81,6 @@ const App = () => {
   }
   
   return (
-    // <Layout>
-    //   <Header className="header">
-    //     <div className="logo" />
-    //     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-    //       <Menu.Item key="1">Home</Menu.Item>
-    //       <Menu.Item key="2">Analysis</Menu.Item>
-    //       <Menu.Item key="3">Data</Menu.Item>
-    //       <Menu.Item key="4">User Profile</Menu.Item>
-    //     </Menu>
-    //   </Header>
-    //   <Layout>
-    //     <Sider
-    //       width={200}
-    //       style={{
-    //         background: colorBgContainer,
-    //       }}
-    //     >
-    //       <Menu
-    //         mode="inline"
-    //         defaultSelectedKeys={['1']}
-    //         defaultOpenKeys={['sub1']}
-    //         style={{
-    //           height: '100%',
-    //           borderRight: 0,
-    //         }}
-    //         items={items2}
-    //       />
-    //     </Sider>
-    //     <Layout
-    //       style={{
-    //         padding: '0 24px 24px',
-    //       }}
-    //     >
-    //       <Breadcrumb
-    //         style={{
-    //           margin: '16px 0',
-    //         }}
-    //       >
-    //         <Breadcrumb.Item>Home</Breadcrumb.Item>
-    //         <Breadcrumb.Item>List</Breadcrumb.Item>
-    //         <Breadcrumb.Item>App</Breadcrumb.Item>
-    //       </Breadcrumb>
-    //       <Content
-    //         style={{
-    //           padding: 24,
-    //           margin: 0,
-    //           minHeight: 280,
-    //           background: colorBgContainer,
-    //         }}
-    //       >
-    //         Content
-    //       </Content>
-    //     </Layout>
-    //   </Layout>
-    // </Layout>
-
     <Layout
       style={{
         minHeight: '100vh',

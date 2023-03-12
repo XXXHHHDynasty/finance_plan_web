@@ -2,8 +2,8 @@ import React, { createElement, useState, useEffect } from 'react';
 // import './home.css';
 import { useLocation } from "react-router-dom"
 import {
-    Layout, theme, Breadcrumb, Typography, Select, Space,
-    Input, Button, Comment, Avatar, Tooltip, List, PageHeader, Divider
+    Layout, theme, Breadcrumb, Typography, Select, Space, DatePicker,
+    Input, Button
 } from 'antd';
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 import { StarOutlined } from '@ant-design/icons';
@@ -13,6 +13,10 @@ const axios = require('axios').default;
 
 const handleChange = (value) => {
     console.log(`selected ${value}`);
+};
+
+const onChange = (date, dateString) => {
+    console.log(date, dateString);
 };
 
 const Calculator = () => {
@@ -84,26 +88,26 @@ const Calculator = () => {
                     <div style={{ marginBottom: '50px' }}>
                         <Space wrap>
                             <p>Target Date</p>
-                            <Input placeholder="Input date" />
+                            <DatePicker onChange={onChange} />
                         </Space>
                     </div>
                     <Button type="primary">Calculate</Button>
                     <div style={{ marginTop: '50px' }}>
                         <Space wrap>
                             <Title level={4}>Starting CASH Assets:</Title>
-                            <Title level={4} style={{ color:'blue' }}>$xxxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
                         </Space>
                     </div>
                     <div>
                         <Space wrap>
                             <Title level={4}>Starting INVESTMENT Assets:</Title>
-                            <Title level={4} style={{ color:'blue' }}>$xxxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
                         </Space>
                     </div>
                     <div>
                         <Space wrap>
                             <Title level={4}>In order to achieve your goal, you must invest</Title>
-                            <Title level={4} style={{ color:'blue' }}>$xxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>$xxx</Title>
                             <Title level={4}>every month</Title>
                         </Space>
                     </div>
