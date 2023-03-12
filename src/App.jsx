@@ -17,9 +17,9 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem('Home', '1',  <DesktopOutlined />),
+  getItem('Home', '1', <DesktopOutlined />),
   getItem('Analysis', '2', <PieChartOutlined />),
-  getItem('Data', '3', <FileOutlined />),
+  getItem('Calculator', '3', <FileOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
     getItem('Profile', '4'),
     getItem('Financial plan', '5'),
@@ -45,7 +45,7 @@ const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, i
 });
 
 const App = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [server, setserver] = useState([]);
   const [current, setCurrent] = useState("1");
   const [status, setStatus] = useState(false);
@@ -57,16 +57,23 @@ const App = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   // navigate to 'home' page
-  // const goHome = () => {
-  //   setCurrent("1")
-  //   navigate('/empty', {})
-  // }
+  const goHome = () => {
+    setCurrent("1")
+    navigate('/home', {})
+  }
 
-  // navigate to 'UserProfile' page
-  // const goUserProfile = () => {
-  //   setCurrent("2")
-  //   navigate('/userprofile', {})
-  // }
+  // navigate to 'calculator' page
+  const goCalculator = () => {
+    setCurrent("1")
+    navigate('/calculator', {})
+  }
+
+  // navigate to 'userProfile' page
+  const goUserProfile = () => {
+    setCurrent("1")
+    navigate('/userProfile', {})
+  }
+  
   return (
     // <Layout>
     //   <Header className="header">
@@ -137,9 +144,14 @@ const App = () => {
             background: 'rgba(255, 255, 255, 0.2)',
           }}
         />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+          <Menu.Item key="1" onClick={goHome}>Home</Menu.Item>
+          <Menu.Item key="2">Analysis</Menu.Item>
+          <Menu.Item key="3" onClick={goCalculator}>Calculator</Menu.Item>
+          <Menu.Item key="4" onClick={goUserProfile}>UserProfile</Menu.Item>
+        </Menu>
       </Sider>
-      <Layout className="site-layout">
+      {/* <Layout className="site-layout">
         <Header
           style={{
             padding: 0,
@@ -176,7 +188,8 @@ const App = () => {
         >
           Ant Design ©2023 Created by Ant UED
         </Footer>
-      </Layout>
+      </Layout> */}
+      <Outlet context={[status, setStatus]} />
     </Layout>
   );
 };
