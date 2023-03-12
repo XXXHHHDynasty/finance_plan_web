@@ -74,6 +74,12 @@ const App = () => {
     navigate('/userProfile', {})
   }
   
+  // navigate to 'profileSetting' page
+  const goProfileSetting = () => {
+    setCurrent("1")
+    navigate('/profileSetting', {})
+  }
+  
   return (
     // <Layout>
     //   <Header className="header">
@@ -148,47 +154,13 @@ const App = () => {
           <Menu.Item key="1" onClick={goHome}>Home</Menu.Item>
           <Menu.Item key="2">Analysis</Menu.Item>
           <Menu.Item key="3" onClick={goCalculator}>Calculator</Menu.Item>
-          <Menu.Item key="4" onClick={goUserProfile}>UserProfile</Menu.Item>
+          <Menu.SubMenu title="User">
+            <Menu.Item key="4" onClick={goUserProfile}>User Profile</Menu.Item>
+            <Menu.Item key="5" onClick={goProfileSetting}>Profile Setting</Menu.Item>
+          </Menu.SubMenu>
+          
         </Menu>
       </Sider>
-      {/* <Layout className="site-layout">
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        />
-        <Content
-          style={{
-            margin: '0 16px',
-          }}
-        >
-          <Breadcrumb
-            style={{
-              margin: '16px 0',
-            }}
-          >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-            }}
-          >
-            Bill is a cat.
-          </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          Ant Design ©2023 Created by Ant UED
-        </Footer>
-      </Layout> */}
       <Outlet context={[status, setStatus]} />
     </Layout>
   );

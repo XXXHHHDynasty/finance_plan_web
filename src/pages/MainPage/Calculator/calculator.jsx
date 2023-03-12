@@ -81,13 +81,33 @@ const Calculator = () => {
                             <Input placeholder="Input amount" />
                         </Space>
                     </div>
-                    <div style={{marginBottom: '50px'}}>
+                    <div style={{ marginBottom: '50px' }}>
                         <Space wrap>
                             <p>Target Date</p>
                             <Input placeholder="Input date" />
                         </Space>
                     </div>
                     <Button type="primary">Calculate</Button>
+                    <div style={{ marginTop: '50px' }}>
+                        <Space wrap>
+                            <Title level={4}>Starting CASH Assets:</Title>
+                            <Title level={4} style={{ color:'blue' }}>$xxxx</Title>
+                        </Space>
+                    </div>
+                    <div>
+                        <Space wrap>
+                            <Title level={4}>Starting INVESTMENT Assets:</Title>
+                            <Title level={4} style={{ color:'blue' }}>$xxxx</Title>
+                        </Space>
+                    </div>
+                    <div>
+                        <Space wrap>
+                            <Title level={4}>In order to achieve your goal, you must invest</Title>
+                            <Title level={4} style={{ color:'blue' }}>$xxx</Title>
+                            <Title level={4}>every month</Title>
+                        </Space>
+                    </div>
+                    <Title level={5} style={{ fontStyle: 'italic' }}>This calculation is based on investing monthly into a market portfolio with a 7% annual return</Title>
                 </div>
             </Content>
             <Footer

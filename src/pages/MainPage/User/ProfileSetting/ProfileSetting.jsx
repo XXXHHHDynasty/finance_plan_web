@@ -15,7 +15,7 @@ const handleChange = (value) => {
     console.log(`selected ${value}`);
 };
 
-const UserProfile = () => {
+const ProfileSetting = () => {
 
     const [postMessage, setPost] = useState('');
     const [data, setData] = useState('');
@@ -32,7 +32,7 @@ const UserProfile = () => {
     const location = useLocation();
 
     return (
-        <Layout className="profile-layout">
+        <Layout className="profileSetting-layout">
             <Header
                 style={{
                     padding: 0,
@@ -155,4 +155,4 @@ const UserProfile = () => {
     )
 }
 
-export default UserProfile;
+export default ProfileSetting;
