@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom'
 import { LaptopOutlined, NotificationOutlined, UserOutlined, FileOutlined, PieChartOutlined, DesktopOutlined, TeamOutlined } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme, Image } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -73,13 +73,13 @@ const App = () => {
     setCurrent("1")
     navigate('/userProfile', {})
   }
-  
+
   // navigate to 'profileSetting' page
   const goProfileSetting = () => {
     setCurrent("1")
     navigate('/profileSetting', {})
   }
-  
+
   return (
     <Layout
       style={{
@@ -87,13 +87,18 @@ const App = () => {
       }}
     >
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div
+        <div className="logo"
           style={{
             height: 32,
             margin: 16,
             background: 'rgba(255, 255, 255, 0.2)',
+            // backgroundImage: 'url("../images/WPIlogo.jpeg")'
           }}
         />
+          {/* <Image
+            width={200}
+            src="../images/WPIlogo.jepg"
+          /> */}
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="1" onClick={goHome}>Home</Menu.Item>
           <Menu.Item key="2">Analysis</Menu.Item>
@@ -102,7 +107,7 @@ const App = () => {
             <Menu.Item key="4" onClick={goUserProfile}>User Profile</Menu.Item>
             <Menu.Item key="5" onClick={goProfileSetting}>Profile Setting</Menu.Item>
           </Menu.SubMenu>
-          
+
         </Menu>
       </Sider>
       <Outlet context={[status, setStatus]} />

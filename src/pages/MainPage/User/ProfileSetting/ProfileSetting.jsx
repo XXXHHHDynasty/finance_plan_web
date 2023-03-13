@@ -1,6 +1,6 @@
 import React, { createElement, useState, useEffect } from 'react';
 // import './home.css';
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import {
     Layout, theme, Breadcrumb, Typography, Select, Space,
     Input, InputNumber, Button, Comment, Avatar, Tooltip, List, PageHeader, Divider
@@ -16,20 +16,27 @@ const handleChange = (value) => {
 };
 
 const ProfileSetting = () => {
-
+    const navigate = useNavigate();
     const [postMessage, setPost] = useState('');
+    const [current, setCurrent] = useState("1");
     const [data, setData] = useState('');
 
     const { Title } = Typography;
     const onChange = (value) => {
         console.log('changed', value);
-      };
+    };
 
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
     const location = useLocation();
+
+    // navigate to 'userProfile' page
+    const goUserProfile = () => {
+        setCurrent("1")
+        navigate('/userProfile', {})
+    }
 
     return (
         <Layout className="profileSetting-layout">
@@ -134,7 +141,7 @@ const ProfileSetting = () => {
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Monthly Expenses</Title>
-                    <div style={{marginBottom: '50px'}}>
+                    <div style={{ marginBottom: '50px' }}>
                         <Space wrap>
                             <p>Name</p>
                             <Input placeholder="Input name" />
@@ -142,7 +149,7 @@ const ProfileSetting = () => {
                             <Input placeholder="Input amount" />
                         </Space>
                     </div>
-                    <Button type="primary">Submit</Button>
+                    <Button type="primary" onClick={goUserProfile}>Submit</Button>
                 </div>
             </Content>
             <Footer

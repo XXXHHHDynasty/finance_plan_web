@@ -1,19 +1,22 @@
 import React, { createElement, useState, useEffect } from 'react';
 import './home.css';
-import { useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { Layout, theme, Breadcrumb, Input, Button, Col, Row, Statistic } from 'antd';
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 import { StarOutlined } from '@ant-design/icons';
 
 const { Header, Footer, Content, Sider } = Layout;
 const { Countdown } = Statistic;
-const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Dayjs is also OK
+
+const dayToMsec = 1000 * 60 * 60 * 24;
+const deadline = Date.now() + dayToMsec * 365; // Dayjs is also OK
 
 const axios = require('axios').default;
 
 const Home = () => {
-
+  const navigate = useNavigate();
   const [postMessage, setPost] = useState('');
+  const [current, setCurrent] = useState("1");
   const [data, setData] = useState('');
 
   const {
@@ -21,6 +24,12 @@ const Home = () => {
   } = theme.useToken();
 
   const location = useLocation();
+
+  // navigate to 'calculator' page
+  const goCalculator = () => {
+    setCurrent("1")
+    navigate('/calculator', {})
+  }
 
   const onFinish = () => {
     console.log('finished!');
@@ -63,23 +72,26 @@ const Home = () => {
             <div style={{ flex: 1 }}>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Statistic title="Active Users" value={3} />
+                  <Statistic title="Account Balance (USD)" value={11289} precision={2} />
                 </Col>
                 <Col span={12}>
-                  <Statistic title="Account Balance (USD)" value={11289} precision={2} />
-                  <Button style={{ marginTop: 16 }} type="primary">
-                    Reset
-                  </Button>
+                  <Statistic title="Investment Assets (USD)" value={3700} precision={2} />
                 </Col>
               </Row>
             </div>
             <div style={{ flex: 1 }}>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Countdown title="Target Date Countdown" value={deadline} onFinish={onFinish} />
+                  <Statistic title="Target Amount (USD)" value={50000} precision={2} />
+                  <Button style={{ marginTop: 16 }} type="primary" onClick={goCalculator}>
+                    Reset
+                  </Button>
                 </Col>
                 <Col span={12}>
-                  <Countdown title="Day Level" value={deadline} format="D [days] H [hrs] m [mins] s [secs]" />
+                  <Countdown title="Target Date Countdown" value={deadline} format="D [days] H [hrs] m [mins] s [secs]" />
+                  <Button style={{ marginTop: 16 }} type="primary" onClick={goCalculator}>
+                    Reset
+                  </Button>
                 </Col>
               </Row>
             </div>

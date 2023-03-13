@@ -7,6 +7,15 @@
   pointer-events: none;
 }
 
+/* .logo {
+  height: 32px;
+  background-image: url('../images/WPIlogo.jpeg');
+  background: url('path/to/logo.png') no-repeat center;
+  background-size: contain;
+  margin: 16px;
+} */
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

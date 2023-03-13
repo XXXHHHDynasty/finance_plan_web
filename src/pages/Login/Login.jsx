@@ -28,7 +28,7 @@ const Login = () => {
 
     // naviagte to 'Home' Page
     const goHome = (username) => {
-        navigate('/empty', { username })
+        navigate('/home', { username })
     }
 
     // submit users' information & naviagte to 'Home' page
@@ -59,7 +59,7 @@ const Login = () => {
                 </div>
                 <div className='form-wrap'>
                     <div>
-                        <div style={{ fontSize: 30, color: '#333' }}>WPI Financial Analysis System</div>
+                        <div style={{ fontSize: 30, color: '#333' }}>WPI Financial Self-Planning Tool</div>
                         <div style={{ fontSize: 15, color: '#333' }}>Welcome to log in</div>
                     </div>
                     <Form
@@ -112,32 +112,30 @@ const Login = () => {
                         </Form.Item>
                         <Form.Item>
                             {/* <Button style={{ width: '100%' }} onClick={() => {
-                form
-                  .validateFields()
-                  .then((values) => {
-                    form.resetFields();
-                    onFinish(values);
-                  })
-                  .catch((info) => {
-                    console.log('Validate Failed:', info);
-                  });
-              }} type="primary" htmlType="submit"> */}
-                            <Button
-                                style={{ width: '100%' }}
-                                type="primary"
-                                onClick={goHome}
-                                htmlType="submit"
-                            >
-                                Log In
-                            </Button>
+                                form
+                                    .validateFields()
+                                    .then((values) => {
+                                        form.resetFields();
+                                        onFinish(values);
+                                    })
+                                    .catch((info) => {
+                                        console.log('Validate Failed:', info);
+                                    });
+                            }} type="primary" htmlType="submit"> */}
+                                <Button
+                                    style={{ width: '100%' }}
+                                    type="primary"
+                                    onClick={goHome}
+                                    htmlType="submit"
+                                >
+                                    Log In
+                                </Button>
                         </Form.Item>
                     </Form>
                     <div className="loginOtherSelection">
                         <div style={{ fontSize: 12, color: '#666', padding: '4px 15px 4px 15px' }}>Don't have an account?</div>
                         <div className="buttonColletion">
-                            <Button type="link" style={{ fontSize: 12 }} onClick={goSignup}>
-                                create a new account
-                            </Button>
+                            <Button type="link" style={{ fontSize: 12 }} onClick={goSignup}>create a new account</Button>
                             <Button type="link" style={{ fontSize: 12 }} onClick={goHome}>Enter as anonymous user</Button>
                         </div>
                     </div>
