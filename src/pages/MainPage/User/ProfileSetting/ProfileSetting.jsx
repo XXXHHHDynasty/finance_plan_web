@@ -68,7 +68,7 @@ const ProfileSetting = () => {
                     }}
                 >
                     <Title level={2} style={{ color: 'blue' }}>Profile Setting</Title>
-                    <Title level={4} style={{ color: 'black' }}>Family Members</Title>
+                    <Title level={4} style={{ color: 'black' }}>My Info</Title>
                     <div>
                         <Space wrap>
                             <p>Name</p>

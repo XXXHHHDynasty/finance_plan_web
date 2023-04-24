@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
-import '/node_modules/antd/dist/antd.css';
-import illustration from '../../images/WPIlogo.jpeg';
+// import '/node_modules/antd/dist/antd.css';
+import illustration from '../../../images/WPIlogo.jpeg';
 import './signup.css';
 
 const Signup = () => {
@@ -33,7 +33,7 @@ const Signup = () => {
         </div>
         <div className='form-wrap'>
           <div>
-          <div style={{ fontSize: 30, color: '#333' }}>WPI Chat System</div>
+          <div style={{ fontSize: 30, color: '#333' }}>Financial Self-Planning Tool</div>
             <div style={{ fontSize: 15, color: '#333' }}>Welcome to log in</div>
           </div>
           <Form

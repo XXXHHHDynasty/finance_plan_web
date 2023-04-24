@@ -1,17 +1,19 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { Button, Checkbox, Form, Input } from "antd";
-import { useEffect } from 'react'
+import { useNavigate, useLocation, useHistory } from "react-router-dom";
+import { Button, Checkbox, Form, Input, message } from "antd";
+import { useState, useEffect } from 'react'
 // import "/node_modules/antd/dist/antd.css";
 import illustration from "../../images/WPIlogo.jpeg";
 import "./login.css";
 
 const axios = require('axios').default;
+// import axios from 'axios';
 
 const Login = () => {
 
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const location = useLocation();
+    // const history = useHistory()
 
     // receive information from 'register' page
     useEffect(() => {
@@ -27,24 +29,36 @@ const Login = () => {
     }
 
     // naviagte to 'Home' Page
-    const goHome = (username) => {
-        navigate('/home', { username })
-    }
+    // const goHome = (username) => {
+    //     navigate('/home', { username })
+    // }
+    const goHome = () => {
+        navigate("/home", { username: form.getFieldValue("username") });
+    };
 
     // submit users' information & naviagte to 'Home' page
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Success:', values);
-        return axios({
-            method: 'post',
-            url: 'http://localhost:3000/users',
-            data: {
-                username: values.username,
-                password: values.password,
-                remember: values.remember
+        const { username, password } = values;
+
+        try {
+            const response = await axios.post('http://127.0.0.1:3007/api/login', {
+                username,
+                password,
+            });
+
+            if (response.data.status === 0) {
+                message.success(response.data.message);
+                goHome(username);
+            } else {
+                message.error(response.data.message);
             }
-        }),
-            goHome(values.username)
+        } catch (error) {
+            console.error('Login failed:', error);
+            message.error('Login failed. Please try again later.');
+        }
     };
+
 
     // print message when login failed
     const onFinishFailed = (errorInfo) => {
@@ -59,7 +73,7 @@ const Login = () => {
                 </div>
                 <div className='form-wrap'>
                     <div>
-                        <div style={{ fontSize: 30, color: '#333' }}>WPI Financial Self-Planning Tool</div>
+                        <div style={{ fontSize: 30, color: '#333' }}>Financial Self-Planning Tool</div>
                         <div style={{ fontSize: 15, color: '#333' }}>Welcome to log in</div>
                     </div>
                     <Form
@@ -122,14 +136,14 @@ const Login = () => {
                                         console.log('Validate Failed:', info);
                                     });
                             }} type="primary" htmlType="submit"> */}
-                                <Button
-                                    style={{ width: '100%' }}
-                                    type="primary"
-                                    onClick={goHome}
-                                    htmlType="submit"
-                                >
-                                    Log In
-                                </Button>
+                            <Button
+                                style={{ width: '100%' }}
+                                type="primary"
+                                // onClick={goHome}
+                                htmlType="submit"
+                            >
+                                Log In
+                            </Button>
                         </Form.Item>
                     </Form>
                     <div className="loginOtherSelection">
@@ -137,6 +151,9 @@ const Login = () => {
                         <div className="buttonColletion">
                             <Button type="link" style={{ fontSize: 12 }} onClick={goSignup}>create a new account</Button>
                             <Button type="link" style={{ fontSize: 12 }} onClick={goHome}>Enter as anonymous user</Button>
+                            {/* <Button type="link" style={{ fontSize: 12 }} onClick={goHome} htmlType="button">
+                                Enter as anonymous user
+                            </Button> */}
                         </div>
                     </div>
                 </div>
