@@ -43,8 +43,8 @@ const Login = () => {
 
         try {
             const response = await axios.post('http://127.0.0.1:3007/api/login', {
-                username,
-                password,
+                username: username,
+                password: password, 
             });
 
             if (response.data.status === 0) {
