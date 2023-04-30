@@ -20,17 +20,51 @@ const onChange = (date, dateString) => {
 };
 
 const Calculator = () => {
+    const [startingAssets, setStartingAssets] = useState('xxxx')
+    const [startingAssetsInput, setStartingAssetsInput] = useState(0)
+    const [monthlyInvestment, setMonthlyInvestment] = useState('xxxx')
+    const [monthlyIncomeInput, setMonthlyIncomeInput] = useState(0)
+    const [investmentRatioInput, setInvestmentRatioInput] = useState(0)
+    const [targetAmountInput, setTargetAmountInput] = useState(0)
+    const [targetDate, setTargetDate] = useState()
 
-    const [postMessage, setPost] = useState('');
-    const [data, setData] = useState('');
+    const handleStartingAssets = () => {
+        setStartingAssets(startingAssetsInput)
+    }
+    const handleStartingAssetsChange = (e) => {
+        setStartingAssetsInput(e.target.value)
+    }
+
+    const handleMonthlyInvestment = () => {
+        setMonthlyInvestment((Number(monthlyIncomeInput) * Number(investmentRatioInput) / 100).toString())
+    }
+    const handleMonthlyIncomeChange = (e) => {
+        setMonthlyIncomeInput(e.target.value)
+    }
+    const handleinvestmentRatioChange = (e) => {
+        setInvestmentRatioInput(e.target.value)
+    }
+
+    const handleTargetAmountChange = (e) => {
+        setTargetAmountInput(e.target.value)
+    }
+
+    const handleTargetDateChange = (e) => {
+        console.log(e)
+        setTargetDate(e)
+    }
+
+    const handleCalculate = () => {
+        handleStartingAssets()
+        handleMonthlyInvestment()
+
+    }
 
     const { Title } = Typography;
 
     const {
         token: { colorBgContainer },
     } = theme.useToken();
-
-    const location = useLocation();
 
     return (
         <Layout className="calculator-layout">
@@ -51,7 +85,7 @@ const Calculator = () => {
                     }}
                 >
                     <Breadcrumb.Item>Financial Self-Planning</Breadcrumb.Item>
-                    <Breadcrumb.Item>Calculator</Breadcrumb.Item>
+                    <Breadcrumb.Item>Investment Calculator</Breadcrumb.Item>
                 </Breadcrumb>
                 <div
                     style={{
@@ -60,7 +94,7 @@ const Calculator = () => {
                         background: colorBgContainer,
                     }}
                 >
-                    <Title level={2} style={{ color: 'blue' }}>Calculator</Title>
+                    <Title level={2} style={{ color: 'blue' }}>Investment Calculator</Title>
                     <div>
                         <Space wrap>
                             <p>Goal</p>
@@ -81,34 +115,66 @@ const Calculator = () => {
                     </div>
                     <div>
                         <Space wrap>
+                            <p>Starting investment assets</p>
+                            <Input placeholder="Input amount" onChange={handleStartingAssetsChange} />
+                        </Space>
+                    </div>
+                    <div>
+                        <Space wrap>
+                            <p>Monthly income</p>
+                            <Input placeholder="Input amount" onChange={handleMonthlyIncomeChange} />
+                        </Space>
+                    </div>
+                    <div>
+                        <Space wrap>
+                            <p>Monthly investment ratio</p>
+                            <Input suffix='%' placeholder="Input amount" onChange={handleinvestmentRatioChange} />
+                            <p>(compared to income)</p>
+                        </Space>
+                    </div>
+                    <div>
+                        <Space wrap>
                             <p>Target Amount</p>
-                            <Input placeholder="Input amount" />
+                            <Input placeholder="Input amount" onChange={handleTargetAmountChange} />
                         </Space>
                     </div>
                     <div style={{ marginBottom: '50px' }}>
                         <Space wrap>
                             <p>Target Date</p>
-                            <DatePicker onChange={onChange} />
+                            <DatePicker onChange={handleTargetDateChange} />
                         </Space>
                     </div>
-                    <Button type="primary">Calculate</Button>
+                    <Button type="primary" onClick={handleCalculate} >Calculate</Button>
                     <div style={{ marginTop: '50px' }}>
                         <Space wrap>
-                            <Title level={4}>Starting CASH Assets:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
-                        </Space>
-                    </div>
-                    <div>
-                        <Space wrap>
+
                             <Title level={4}>Starting INVESTMENT Assets:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>${startingAssets}</Title>
                         </Space>
                     </div>
                     <div>
                         <Space wrap>
-                            <Title level={4}>In order to achieve your goal, you must invest</Title>
+                            <Title level={4}>Time remain:</Title>
+                            <Title level={4} style={{ color: 'blue' }}>xxxx</Title>
+                            <Title level={4}>months</Title>
+                        </Space>
+                    </div>
+                    <div>
+                        <Space wrap>
+                            {/* <Title level={4}>In order to achieve your goal, you must invest</Title>
                             <Title level={4} style={{ color: 'blue' }}>$xxx</Title>
-                            <Title level={4}>every month</Title>
+                            <Title level={4}>every month</Title> */}
+                            <Title level={4}>Monthly investment:</Title>
+                            <Title level={4} style={{ color: 'blue' }}>${monthlyInvestment}</Title>
+                        </Space>
+                    </div>
+                    <div>
+                        <Space wrap>
+                            <Title level={4}>Estimated final assets:</Title>
+                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                            <Title level={4}>,</Title>
+                            <Title level={4} style={{ color: 'blue', marginLeft: '50px' }}>$xxxx</Title>
+                            <Title level={4}>more than the target amount.</Title>
                         </Space>
                     </div>
                     <Title level={5} style={{ fontStyle: 'italic' }}>This calculation is based on investing monthly into a market portfolio with a 7% annual return</Title>

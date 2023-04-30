@@ -35,7 +35,17 @@ const ProfileSetting = () => {
     // navigate to 'userProfile' page
     const goUserProfile = () => {
         const userInformation = {
-            name: userInfo.name,
+            myName: userInfo.myName,
+            myAge: userInfo.myAge,
+            incomeAmount: userInfo.incomeAmount,
+            incomeFrequency: userInfo.incomeFrequency,
+            assetsAmount: userInfo.assetsAmount,
+            assetsType: userInfo.assetsType,
+            debtTotalOwed: userInfo.debtTotalOwed,
+            debtInterestRate: userInfo.debtInterestRate,
+            debtMonthlyOwed: userInfo.debtMonthlyOwed,
+            debtTimeRemain: userInfo.debtTimeRemain,
+            monthlyExpenses: userInfo.monthlyExpenses
             // ... other fields
         };
         console.log('User information:', userInformation);
@@ -44,8 +54,17 @@ const ProfileSetting = () => {
         navigate('/userProfile', {})
     }
 
-    const handleNameChange = (e) => { setUserInfo({ ...userInfo, name: e.target.value }) }
-    // const handleChange = (e) => {setUserInfo({ ...userInfo, : e.target.value })}
+    const handleMyNameChange = (e) => { setUserInfo({ ...userInfo, myName: e.target.value }) }
+    const handleMyAgeChange = (e) => { setUserInfo({ ...userInfo, myAge: e.target.value }) }
+    const handleIncomeAmountChange = (e) => { setUserInfo({ ...userInfo, incomeAmount: e.target.value }) }
+    const handleIncomeFrequencyChange = (e) => { setUserInfo({ ...userInfo, incomeFrequency: e.target.value }) }
+    const handleAssetsAmountChange = (e) => { setUserInfo({ ...userInfo, assetsAmount: e.target.value }) }
+    const handleAssetsTypeChange = (e) => { setUserInfo({ ...userInfo, assetsType: e.target.value }) }
+    const handleDebtTotalOwedChange = (e) => { setUserInfo({ ...userInfo, debtTotalOwed: e.target.value }) }
+    const handleDebtInterestRateChange = (e) => { setUserInfo({ ...userInfo, debtInterestRate: e.target.value }) }
+    const handleDebtMonthlyOwedChange = (e) => { setUserInfo({ ...userInfo, debtMonthlyOwed: e.target.value }) }
+    const handleDebtTimeRemainChange = (e) => { setUserInfo({ ...userInfo, debtTimeRemain: e.target.value }) }
+    const handleMonthlyExpensesChange = (e) => { setUserInfo({ ...userInfo, monthlyExpenses: e.target.value }) }
 
     return (
         <Layout className="profileSetting-layout">
@@ -81,9 +100,9 @@ const ProfileSetting = () => {
                     <div>
                         <Space wrap>
                             <p>Name</p>
-                            <Input placeholder="Input name" onChange={handleNameChange} />
+                            <Input placeholder="Input name" onChange={handleMyNameChange} />
                             <p>Age</p>
-                            <InputNumber min={0} max={200} defaultValue={18} onChange={onChange} />
+                            <InputNumber min={0} max={200} defaultValue={18} onChange={handleMyAgeChange} />
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Income</Title>
@@ -92,7 +111,7 @@ const ProfileSetting = () => {
                             {/* <p>Name</p>
                             <Input placeholder="Input name" /> */}
                             <p>Amount</p>
-                            <Input placeholder="Input amount" prefix="$" />
+                            <Input placeholder="Input amount" prefix="$" onChange={handleIncomeAmountChange} />
                             <p>Frequency</p>
                             <Select
                                 defaultValue="monthly"
@@ -108,6 +127,7 @@ const ProfileSetting = () => {
                                     { value: 'quarterly', label: 'Quarterly' },
                                     { value: 'yearly', label: 'Yearly' }
                                 ]}
+                                onChange={handleIncomeFrequencyChange}
                             />
                         </Space>
                     </div>
@@ -117,7 +137,7 @@ const ProfileSetting = () => {
                             {/* <p>Name</p>
                             <Input placeholder="Input name" /> */}
                             <p>Amount</p>
-                            <Input placeholder="Input amount" prefix="$" />
+                            <Input placeholder="Input amount" prefix="$" onChange={handleAssetsAmountChange} />
                             <p>Type</p>
                             <Select
                                 defaultValue="house"
@@ -131,6 +151,7 @@ const ProfileSetting = () => {
                                     { value: 'shop', label: 'Shop' },
                                     { value: 'virtual_assets', label: 'Virtual assets' }
                                 ]}
+                                onChange={handleAssetsTypeChange}
                             />
                         </Space>
                     </div>
@@ -140,13 +161,13 @@ const ProfileSetting = () => {
                             {/* <p>Name</p>
                             <Input placeholder="Input name" /> */}
                             <p>Total Owed</p>
-                            <Input placeholder="Input amount" prefix="$" />
+                            <Input placeholder="Input amount" prefix="$" onChange={handleDebtTotalOwedChange} />
                             <p>Interest Rate</p>
-                            <Input placeholder="Input rate" />
+                            <Input placeholder="Input rate" onChange={handleDebtInterestRateChange} />
                             <p>Monthly Owed</p>
-                            <Input placeholder="Input amount" prefix="$" />
+                            <Input placeholder="Input amount" prefix="$" onChange={handleDebtMonthlyOwedChange} />
                             <p>Time Remaining</p>
-                            <Input placeholder="Input time remaining" />
+                            <Input placeholder="Input time remaining" onChange={handleDebtTimeRemainChange} />
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Monthly Expenses</Title>
@@ -155,7 +176,7 @@ const ProfileSetting = () => {
                             {/* <p>Name</p>
                             <Input placeholder="Input name" /> */}
                             <p>Amount</p>
-                            <Input placeholder="Input amount" prefix="$" />
+                            <Input placeholder="Input amount" prefix="$" onChange={handleMonthlyExpensesChange} />
                         </Space>
                     </div>
                     <Button type="primary" onClick={goUserProfile}>Submit</Button>

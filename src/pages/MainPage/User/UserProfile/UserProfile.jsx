@@ -79,9 +79,9 @@ const UserProfile = () => {
                     <div>
                         <Space wrap>
                             <p>Name:</p>
-                            <p style={{ marginRight: '20px' }}>{userInfo.name || 'default'}</p>
+                            <p style={{ marginRight: '20px' }}>{userInfo.myName || 'default'}</p>
                             <p>Age:</p>
-                            <p>default</p>
+                            <p>{userInfo.myAge || 'default'}</p>
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Income</Title>
@@ -90,9 +90,9 @@ const UserProfile = () => {
                             {/* <p>Name:</p>
                             <p style={{ marginRight: '20px' }}>default</p> */}
                             <p>Amount:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            <p style={{ marginRight: '20px' }}>{userInfo.incomeAmount || 'default'}</p>
                             <p>Frequency:</p>
-                            <p>default</p>
+                            <p>{userInfo.incomeFrequency || 'default'}</p>
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Assets</Title>
@@ -101,9 +101,9 @@ const UserProfile = () => {
                             {/* <p>Name:</p>
                             <p style={{ marginRight: '20px' }}>default</p> */}
                             <p>Amount:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            <p style={{ marginRight: '20px' }}>{userInfo.assetsAmount || 'default'}</p>
                             <p>Type:</p>
-                            <p>default</p>
+                            <p>{userInfo.assetsType || 'default'}</p>
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Debt</Title>
@@ -112,13 +112,13 @@ const UserProfile = () => {
                             {/* <p>Name:</p>
                             <p style={{ marginRight: '20px' }}>default</p> */}
                             <p>Total Owed:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            <p style={{ marginRight: '20px' }}>{userInfo.debtTotalOwed || 'default'}</p>
                             <p>Interest Rate:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            <p style={{ marginRight: '20px' }}>{userInfo.debtInterestRate || 'default'}</p>
                             <p>Monthly Owed:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            <p style={{ marginRight: '20px' }}>{userInfo.debtMonthlyOwed || 'default'}</p>
                             <p>Time Remaining:</p>
-                            <p>default</p>
+                            <p>{userInfo.debtTimeRemain || 'default'}</p>
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Monthly Expenses</Title>
@@ -127,7 +127,7 @@ const UserProfile = () => {
                             {/* <p>Name:</p>
                             <p style={{ marginRight: '20px' }}>default</p> */}
                             <p>Amount:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            <p style={{ marginRight: '20px' }}>{userInfo.monthlyExpenses || 'default'}</p>
                         </Space>
                     </div>
                 </div>

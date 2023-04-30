@@ -21,8 +21,16 @@ const onChange = (date, dateString) => {
 
 const BudgetManager = () => {
     const [selectedMonth, setSelectedMonth] = useState(null);
-    const [budget, setBudget] = useState(0);
+    const [budget, setBudget] = useState('0');
     const [budgetInput, setBudgetInput] = useState(0)
+    const [income, setIncome] = useState('0')
+    const [incomeInput, setIncomeInput] = useState(0)
+    const [expenses, setExpenses] = useState('0')
+    const [expensesInput, setExpensesInput] = useState(0)
+    const [compareString, setCompareString] = useState('lower than the budget:')
+    const [compareBudget, setCompareBudget] = useState('0')
+    const [saving, setSaving] = useState('0')
+
     const [cards, setCards] = useState([]);
 
     const handleMonthChange = (date, dateString) => {
@@ -32,22 +40,47 @@ const BudgetManager = () => {
     const handleBudget = () => {
         setBudget(budgetInput)
     }
-
     const handleBudgetChange = (e) => {
-        setBudgetInput(e)
+        setBudgetInput(e.target.value)
     }
 
-    const handleBudgetSubmit = (event) => {
-        event.preventDefault();
-        const budgetInput = event.target.elements.budgetInput.value;
-        const newBudget = parseFloat(budgetInput) || 0;
-        setBudget(budgetInput);
-    };
+    const handleIncome = () => {
+        setIncome((Number(income) + Number(incomeInput)).toString())
+    }
+    const handleIncomeChange = (e) => {
+        setIncomeInput(e.target.value)
+    }
+
+    const handleExpenses = () => {
+        setExpenses((Number(expenses) + Number(expensesInput)).toString())
+    }
+    const handleExpensesChange = (e) => {
+        setExpensesInput(e.target.value)
+    }
+
+    const handleCompareString = () => {
+        if (Number(expenses) <= Number(budget))
+            setCompareString('did not exceed the budget by:')
+        else
+            setCompareString('exceeded the budget by:')
+        handleCompareBudget()
+        handleSaving()
+    }
+
+    const handleCompareBudget = () => {
+        if (Number(expenses) <= Number(budget))
+            setCompareBudget((Number(budget) - Number(expenses)).toString())
+        else
+            setCompareBudget((Number(expenses) - Number(budget)).toString())
+    }
+
+    const handleSaving = () => {
+        setSaving((Number(income) - Number(expenses)).toString())
+    }
 
     const addCard = () => {
         setCards([...cards, (
             <Card
-                key={cards.length}
                 title={`${selectedMonth ? selectedMonth : 'Select a month'} budget`}
                 // extra={<a href="#">More</a>}
                 style={{
@@ -60,7 +93,7 @@ const BudgetManager = () => {
                         <DatePicker onChange={handleMonthChange} picker="month" />
                         <Space style={{ marginLeft: '200px' }}>
                             <Title level={4}>Total income this month:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>${income}</Title>
                         </Space>
                         <Space style={{ marginLeft: '20px' }}>
                             <Title level={4}>Budget this month:</Title>
@@ -68,36 +101,35 @@ const BudgetManager = () => {
                         </Space>
                     </Space>
                     <Space>
-                        <form onSubmit={handleBudgetSubmit}>
-                            <Space>
-                                <p>Budget</p>
-                                <Input name="budgetInput" prefix="$" placeholder="Input budget this month" onChange={handleBudgetChange} />
-                                <Button type="primary" onClick={handleBudget}>Submit</Button>
-                            </Space>
-                        </form>
+                        <Space>
+                            <p>Budget</p>
+                            <Input name="budgetInput" prefix="$" placeholder="Input budget this month" onChange={handleBudgetChange} />
+                            <Button type="primary" onClick={handleBudget}>Submit</Button>
+                        </Space>
                         <Space style={{ marginLeft: '100px' }}>
                             <Title level={4}>Total living expenses this month:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>${expenses}</Title>
                         </Space>
                     </Space>
                     <Space>
                         <p>Income</p>
-                        <Input prefix="$" placeholder="Input each income" />
-                        <Button type="primary">Add</Button>
+                        <Input prefix="$" placeholder="Input each income" onChange={handleIncomeChange} />
+                        <Button type="primary" onClick={handleIncome} >Add</Button>
                         <Space style={{ marginLeft: '120px' }}>
-                            <Title level={4}>This month's expenses exceeded the budget by:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                            <Title level={4}>This month's expenses {compareString}</Title>
+                            <Title level={4} style={{ color: 'blue' }}>${compareBudget}</Title>
                         </Space>
                     </Space>
                     <Space>
                         <p>Living Expenses</p>
-                        <Input prefix="$" placeholder="Input each living expenses" />
-                        <Button type="primary">Add</Button>
+                        <Input prefix="$" placeholder="Input each living expenses" onChange={handleExpensesChange} />
+                        <Button type="primary" onClick={handleExpenses} >Add</Button>
                         <Space style={{ marginLeft: '63px' }}>
                             <Title level={4}>Remaining savings this month (available for investment):</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>${saving}</Title>
                         </Space>
                     </Space>
+                    <Button type="primary" onClick={handleCompareString}>Calculate</Button>
                 </Space>
             </Card>
         )]);
@@ -128,7 +160,7 @@ const BudgetManager = () => {
                     }}
                 >
                     <Breadcrumb.Item>Financial Self-Planning</Breadcrumb.Item>
-                    <Breadcrumb.Item>BudgetManager</Breadcrumb.Item>
+                    <Breadcrumb.Item>Budget Manager</Breadcrumb.Item>
                 </Breadcrumb>
                 <div
                     style={{
@@ -137,7 +169,7 @@ const BudgetManager = () => {
                         background: colorBgContainer,
                     }}
                 >
-                    <Title level={2} style={{ color: 'blue' }}>BudgetManager</Title>
+                    <Title level={2} style={{ color: 'blue' }}>Budget Manager</Title>
                     <Space direction="vertical" size={16}>
                         <Card
                             title={`${selectedMonth ? selectedMonth : 'Select a month'} budget`}
@@ -152,7 +184,7 @@ const BudgetManager = () => {
                                     <DatePicker onChange={handleMonthChange} picker="month" />
                                     <Space style={{ marginLeft: '200px' }}>
                                         <Title level={4}>Total income this month:</Title>
-                                        <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                                        <Title level={4} style={{ color: 'blue' }}>${income}</Title>
                                     </Space>
                                     <Space style={{ marginLeft: '20px' }}>
                                         <Title level={4}>Budget this month:</Title>
@@ -160,41 +192,40 @@ const BudgetManager = () => {
                                     </Space>
                                 </Space>
                                 <Space>
-                                    <form onSubmit={handleBudgetSubmit}>
-                                        <Space>
-                                            <p>Budget</p>
-                                            <Input name="budgetInput" prefix="$" placeholder="Input budget this month" onChange={handleBudgetChange} />
-                                            <Button type="primary" onClick={handleBudget}>Submit</Button>
-                                        </Space>
-                                    </form>
+                                    <Space>
+                                        <p>Budget</p>
+                                        <Input name="budgetInput" prefix="$" placeholder="Input budget this month" onChange={handleBudgetChange} />
+                                        <Button type="primary" onClick={handleBudget}>Submit</Button>
+                                    </Space>
                                     <Space style={{ marginLeft: '100px' }}>
                                         <Title level={4}>Total living expenses this month:</Title>
-                                        <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                                        <Title level={4} style={{ color: 'blue' }}>${expenses}</Title>
                                     </Space>
                                 </Space>
                                 <Space>
                                     <p>Income</p>
-                                    <Input prefix="$" placeholder="Input each income" />
-                                    <Button type="primary">Add</Button>
+                                    <Input prefix="$" placeholder="Input each income" onChange={handleIncomeChange} />
+                                    <Button type="primary" onClick={handleIncome} >Add</Button>
                                     <Space style={{ marginLeft: '120px' }}>
-                                        <Title level={4}>This month's expenses exceeded the budget by:</Title>
-                                        <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                                        <Title level={4}>This month's expenses {compareString}</Title>
+                                        <Title level={4} style={{ color: 'blue' }}>${compareBudget}</Title>
                                     </Space>
                                 </Space>
                                 <Space>
                                     <p>Living Expenses</p>
-                                    <Input prefix="$" placeholder="Input each living expenses" />
-                                    <Button type="primary">Add</Button>
+                                    <Input prefix="$" placeholder="Input each living expenses" onChange={handleExpensesChange} />
+                                    <Button type="primary" onClick={handleExpenses} >Add</Button>
                                     <Space style={{ marginLeft: '63px' }}>
                                         <Title level={4}>Remaining savings this month (available for investment):</Title>
-                                        <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                                        <Title level={4} style={{ color: 'blue' }}>${saving}</Title>
                                     </Space>
                                 </Space>
+                                <Button type="primary" onClick={handleCompareString} >Calculate</Button>
                             </Space>
                         </Card>
                         {cards.map(card => card)}
                     </Space>
-                    <Button type="primary" onClick={addCard} style={{ marginTop: '20px', marginLeft: '1000px' }}>Add</Button>
+                    {/* <Button type="primary" onClick={addCard} style={{ marginTop: '20px', marginLeft: '1000px' }}>Add</Button> */}
                 </div>
             </Content>
             <Footer

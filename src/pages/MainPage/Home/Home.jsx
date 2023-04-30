@@ -31,6 +31,12 @@ const Home = () => {
     navigate('/calculator', {})
   }
 
+  // navigate to 'plan' page
+  const goPlan = () => {
+    setCurrent("1")
+    navigate('/plan', {})
+  }
+
   const onFinish = () => {
     console.log('finished!');
   };
@@ -104,13 +110,13 @@ const Home = () => {
               <Row gutter={16}>
                 <Col span={12}>
                   <Statistic title="Target Amount (USD)" value={50000} precision={2} />
-                  <Button style={{ marginTop: 16 }} type="primary" onClick={goCalculator}>
+                  <Button style={{ marginTop: 16 }} type="primary" onClick={goPlan}>
                     Reset
                   </Button>
                 </Col>
                 <Col span={12}>
                   <Countdown title="Target Date Countdown" value={deadline} format="D [days] H [hrs] m [mins] s [secs]" />
-                  <Button style={{ marginTop: 16 }} type="primary" onClick={goCalculator}>
+                  <Button style={{ marginTop: 16 }} type="primary" onClick={goPlan}>
                     Reset
                   </Button>
                 </Col>

@@ -113,9 +113,9 @@ const App = () => {
           /> */}
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="1" onClick={goHome}>Home</Menu.Item>
-          <Menu.Item key="2" onClick={goBudgetManager}>budgetManager</Menu.Item>
-          <Menu.Item key="3" onClick={goCalculator}>Calculator</Menu.Item>
-          <Menu.Item key="4" onClick={goPlan}>Plan</Menu.Item>
+          <Menu.Item key="2" onClick={goBudgetManager}>Budget Manager</Menu.Item>
+          <Menu.Item key="3" onClick={goCalculator}>Investment Calculator</Menu.Item>
+          <Menu.Item key="4" onClick={goPlan}>Investment Plan</Menu.Item>
           <Menu.SubMenu title="User">
             <Menu.Item key="5" onClick={goUserProfile}>User Profile</Menu.Item>
             <Menu.Item key="6" onClick={goProfileSetting}>Profile Setting</Menu.Item>
