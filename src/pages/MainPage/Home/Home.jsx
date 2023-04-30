@@ -1,7 +1,7 @@
 import React, { createElement, useState, useEffect } from 'react';
 import './home.css';
 import { useNavigate, useLocation } from "react-router-dom"
-import { Layout, theme, Breadcrumb, Input, Button, Col, Row, Statistic } from 'antd';
+import { Layout, theme, Breadcrumb, Input, Button, Col, Row, Statistic, Carousel } from 'antd';
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 import { StarOutlined } from '@ant-design/icons';
 
@@ -40,6 +40,13 @@ const Home = () => {
     }
   };
 
+  const carouselStyle = {
+    height: '160px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+  };
   return (
     <Layout className="site-layout">
       <Header
@@ -61,6 +68,20 @@ const Home = () => {
           <Breadcrumb.Item>Financial Self-Planning</Breadcrumb.Item>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
         </Breadcrumb>
+        <Carousel autoplay>
+          <div>
+            <h3 style={carouselStyle}>Nav 1</h3>
+          </div>
+          <div>
+            <h3 style={carouselStyle}>Nav 2</h3>
+          </div>
+          <div>
+            <h3 style={carouselStyle}>Nav 3</h3>
+          </div>
+          <div>
+            <h3 style={carouselStyle}>Nav 4</h3>
+          </div>
+        </Carousel>
         <div
           style={{
             padding: 24,

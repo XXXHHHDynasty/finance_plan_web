@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react'
 // import "/node_modules/antd/dist/antd.css";
 import illustration from "../../images/WPIlogo.jpeg";
 import "./login.css";
+import axios from 'axios';
 
-const axios = require('axios').default;
-// import axios from 'axios';
+// const axios = require('axios').default;
 
 const Login = () => {
 
@@ -44,7 +44,7 @@ const Login = () => {
         try {
             const response = await axios.post('http://127.0.0.1:3007/api/login', {
                 username: username,
-                password: password, 
+                password: password,
             });
 
             if (response.data.status === 0) {

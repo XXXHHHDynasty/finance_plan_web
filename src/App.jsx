@@ -18,7 +18,7 @@ function getItem(label, key, icon, children) {
 
 const items = [
   getItem('Home', '1', <DesktopOutlined />),
-  getItem('Analysis', '2', <PieChartOutlined />),
+  getItem('budgetManager', '2', <PieChartOutlined />),
   getItem('Calculator', '3', <FileOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
     getItem('Profile', '4'),
@@ -62,6 +62,12 @@ const App = () => {
     navigate('/home', {})
   }
 
+  // navigate to 'budgetManager' page
+  const goBudgetManager = () => {
+    setCurrent("1")
+    navigate('/budgetManager', {})
+  }
+
   // navigate to 'calculator' page
   const goCalculator = () => {
     setCurrent("1")
@@ -101,7 +107,7 @@ const App = () => {
           /> */}
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item key="1" onClick={goHome}>Home</Menu.Item>
-          <Menu.Item key="2">Analysis</Menu.Item>
+          <Menu.Item key="2" onClick={goBudgetManager}>budgetManager</Menu.Item>
           <Menu.Item key="3" onClick={goCalculator}>Calculator</Menu.Item>
           <Menu.SubMenu title="User">
             <Menu.Item key="4" onClick={goUserProfile}>User Profile</Menu.Item>

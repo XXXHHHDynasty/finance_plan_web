@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 // import '/node_modules/antd/dist/antd.css';
 import illustration from '../../../images/WPIlogo.jpeg';
 import './signup.css';
+import axios from 'axios';
 
 const Signup = () => {
 
@@ -15,10 +16,32 @@ const Signup = () => {
   }
 
   // complete form & naviagte to 'login' page with data
-  const onFinish = (values) => {
+  // const onFinish = (values) => {
+  //   console.log('Success:', values);
+  //   navigate('/', { state: values })
+  // };
+
+  const onFinish = async (values) => {
     console.log('Success:', values);
-    navigate('/', { state: values })
-  };
+    const { username, password, Confirm } = values;
+
+    try {
+        const response = await axios.post('http://127.0.0.1:3007/api/reguser', {
+            username: username,
+            password: password,
+        });
+
+        if (response.data.status === 0) {
+            message.success(response.data.message);
+            goLogin(username);
+        } else {
+            message.error(response.data.message);
+        }
+    } catch (error) {
+        console.error('Sign up failed:', error);
+        message.error('Sign up failed. Please try again later.');
+    }
+};
 
   // print fail message
   const onFinishFailed = (errorInfo) => {
