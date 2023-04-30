@@ -74,6 +74,12 @@ const App = () => {
     navigate('/calculator', {})
   }
 
+  // navigate to 'plan' page
+  const goPlan = () => {
+    setCurrent("1")
+    navigate('/plan', {})
+  }
+
   // navigate to 'userProfile' page
   const goUserProfile = () => {
     setCurrent("1")
@@ -109,9 +115,10 @@ const App = () => {
           <Menu.Item key="1" onClick={goHome}>Home</Menu.Item>
           <Menu.Item key="2" onClick={goBudgetManager}>budgetManager</Menu.Item>
           <Menu.Item key="3" onClick={goCalculator}>Calculator</Menu.Item>
+          <Menu.Item key="4" onClick={goPlan}>Plan</Menu.Item>
           <Menu.SubMenu title="User">
-            <Menu.Item key="4" onClick={goUserProfile}>User Profile</Menu.Item>
-            <Menu.Item key="5" onClick={goProfileSetting}>Profile Setting</Menu.Item>
+            <Menu.Item key="5" onClick={goUserProfile}>User Profile</Menu.Item>
+            <Menu.Item key="6" onClick={goProfileSetting}>Profile Setting</Menu.Item>
           </Menu.SubMenu>
 
         </Menu>

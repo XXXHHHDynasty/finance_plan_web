@@ -15,21 +15,35 @@ const handleChange = (value) => {
     console.log(`selected ${value}`);
 };
 
-const ProfileSetting = () => {
+const UserProfile = () => {
 
     const [postMessage, setPost] = useState('');
     const [data, setData] = useState('');
+    // const [userInfo, setUserInfo] = useState(() => {
+    //     const savedUserInfo = localStorage.getItem('userInfo');
+    //     return savedUserInfo ? JSON.parse(savedUserInfo) : {};
+    // });
+
+    const [userInfo, setUserInfo] = useState({});
+
+    useEffect(() => {
+        const savedUserInfo = localStorage.getItem('userInfo');
+        if (savedUserInfo) {
+            setUserInfo(JSON.parse(savedUserInfo));
+        }
+    }, []);
 
     const { Title } = Typography;
     const onChange = (value) => {
         console.log('changed', value);
-      };
+    };
 
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
     const location = useLocation();
+    // const userInfo = location.state?.userInfo || {}
 
     return (
         <Layout className="profileSetting-layout">
@@ -65,7 +79,7 @@ const ProfileSetting = () => {
                     <div>
                         <Space wrap>
                             <p>Name:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            <p style={{ marginRight: '20px' }}>{userInfo.name || 'default'}</p>
                             <p>Age:</p>
                             <p>default</p>
                         </Space>
@@ -73,8 +87,8 @@ const ProfileSetting = () => {
                     <Title level={4} style={{ color: 'black' }}>Income</Title>
                     <div>
                         <Space wrap>
-                            <p>Name:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            {/* <p>Name:</p>
+                            <p style={{ marginRight: '20px' }}>default</p> */}
                             <p>Amount:</p>
                             <p style={{ marginRight: '20px' }}>default</p>
                             <p>Frequency:</p>
@@ -84,8 +98,8 @@ const ProfileSetting = () => {
                     <Title level={4} style={{ color: 'black' }}>Assets</Title>
                     <div>
                         <Space wrap>
-                            <p>Name:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            {/* <p>Name:</p>
+                            <p style={{ marginRight: '20px' }}>default</p> */}
                             <p>Amount:</p>
                             <p style={{ marginRight: '20px' }}>default</p>
                             <p>Type:</p>
@@ -95,8 +109,8 @@ const ProfileSetting = () => {
                     <Title level={4} style={{ color: 'black' }}>Debt</Title>
                     <div>
                         <Space wrap>
-                            <p>Name:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            {/* <p>Name:</p>
+                            <p style={{ marginRight: '20px' }}>default</p> */}
                             <p>Total Owed:</p>
                             <p style={{ marginRight: '20px' }}>default</p>
                             <p>Interest Rate:</p>
@@ -108,10 +122,10 @@ const ProfileSetting = () => {
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Monthly Expenses</Title>
-                    <div style={{marginBottom: '50px'}}>
+                    <div style={{ marginBottom: '50px' }}>
                         <Space wrap>
-                            <p>Name:</p>
-                            <p style={{ marginRight: '20px' }}>default</p>
+                            {/* <p>Name:</p>
+                            <p style={{ marginRight: '20px' }}>default</p> */}
                             <p>Amount:</p>
                             <p style={{ marginRight: '20px' }}>default</p>
                         </Space>
@@ -129,4 +143,4 @@ const ProfileSetting = () => {
     )
 }
 
-export default ProfileSetting;
+export default UserProfile;

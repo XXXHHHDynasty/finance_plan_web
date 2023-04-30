@@ -19,7 +19,7 @@ const ProfileSetting = () => {
     const navigate = useNavigate();
     const [postMessage, setPost] = useState('');
     const [current, setCurrent] = useState("1");
-    const [data, setData] = useState('');
+    const [userInfo, setUserInfo] = useState({});
 
     const { Title } = Typography;
     const onChange = (value) => {
@@ -34,9 +34,18 @@ const ProfileSetting = () => {
 
     // navigate to 'userProfile' page
     const goUserProfile = () => {
+        const userInformation = {
+            name: userInfo.name,
+            // ... other fields
+        };
+        console.log('User information:', userInformation);
+        localStorage.setItem('userInfo', JSON.stringify(userInformation));
         setCurrent("1")
         navigate('/userProfile', {})
     }
+
+    const handleNameChange = (e) => { setUserInfo({ ...userInfo, name: e.target.value }) }
+    // const handleChange = (e) => {setUserInfo({ ...userInfo, : e.target.value })}
 
     return (
         <Layout className="profileSetting-layout">
@@ -72,7 +81,7 @@ const ProfileSetting = () => {
                     <div>
                         <Space wrap>
                             <p>Name</p>
-                            <Input placeholder="Input name" />
+                            <Input placeholder="Input name" onChange={handleNameChange} />
                             <p>Age</p>
                             <InputNumber min={0} max={200} defaultValue={18} onChange={onChange} />
                         </Space>
@@ -80,10 +89,10 @@ const ProfileSetting = () => {
                     <Title level={4} style={{ color: 'black' }}>Income</Title>
                     <div>
                         <Space wrap>
-                            <p>Name</p>
-                            <Input placeholder="Input name" />
+                            {/* <p>Name</p>
+                            <Input placeholder="Input name" /> */}
                             <p>Amount</p>
-                            <Input placeholder="Input amount" />
+                            <Input placeholder="Input amount" prefix="$" />
                             <p>Frequency</p>
                             <Select
                                 defaultValue="monthly"
@@ -105,10 +114,10 @@ const ProfileSetting = () => {
                     <Title level={4} style={{ color: 'black' }}>Assets</Title>
                     <div>
                         <Space wrap>
-                            <p>Name</p>
-                            <Input placeholder="Input name" />
+                            {/* <p>Name</p>
+                            <Input placeholder="Input name" /> */}
                             <p>Amount</p>
-                            <Input placeholder="Input amount" />
+                            <Input placeholder="Input amount" prefix="$" />
                             <p>Type</p>
                             <Select
                                 defaultValue="house"
@@ -128,14 +137,14 @@ const ProfileSetting = () => {
                     <Title level={4} style={{ color: 'black' }}>Debt</Title>
                     <div>
                         <Space wrap>
-                            <p>Name</p>
-                            <Input placeholder="Input name" />
+                            {/* <p>Name</p>
+                            <Input placeholder="Input name" /> */}
                             <p>Total Owed</p>
-                            <Input placeholder="Input amount" />
+                            <Input placeholder="Input amount" prefix="$" />
                             <p>Interest Rate</p>
                             <Input placeholder="Input rate" />
                             <p>Monthly Owed</p>
-                            <Input placeholder="Input amount" />
+                            <Input placeholder="Input amount" prefix="$" />
                             <p>Time Remaining</p>
                             <Input placeholder="Input time remaining" />
                         </Space>
@@ -143,10 +152,10 @@ const ProfileSetting = () => {
                     <Title level={4} style={{ color: 'black' }}>Monthly Expenses</Title>
                     <div style={{ marginBottom: '50px' }}>
                         <Space wrap>
-                            <p>Name</p>
-                            <Input placeholder="Input name" />
+                            {/* <p>Name</p>
+                            <Input placeholder="Input name" /> */}
                             <p>Amount</p>
-                            <Input placeholder="Input amount" />
+                            <Input placeholder="Input amount" prefix="$" />
                         </Space>
                     </div>
                     <Button type="primary" onClick={goUserProfile}>Submit</Button>

@@ -128,7 +128,7 @@ const BudgetManager = () => {
                     }}
                 >
                     <Breadcrumb.Item>Financial Self-Planning</Breadcrumb.Item>
-                    <Breadcrumb.Item>Calculator</Breadcrumb.Item>
+                    <Breadcrumb.Item>BudgetManager</Breadcrumb.Item>
                 </Breadcrumb>
                 <div
                     style={{
@@ -137,6 +137,7 @@ const BudgetManager = () => {
                         background: colorBgContainer,
                     }}
                 >
+                    <Title level={2} style={{ color: 'blue' }}>BudgetManager</Title>
                     <Space direction="vertical" size={16}>
                         <Card
                             title={`${selectedMonth ? selectedMonth : 'Select a month'} budget`}
