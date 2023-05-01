@@ -1,13 +1,11 @@
-import React, { createElement, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import './home.css';
-import { useLocation } from "react-router-dom"
 import {
     Layout, theme, Breadcrumb, Typography, Select, Space, DatePicker,
     Input, Button
 } from 'antd';
-import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
-import { StarOutlined } from '@ant-design/icons';
-const { Header, Footer, Content, Sider } = Layout;
+import { differenceInMonths } from 'date-fns';
+const { Header, Footer, Content } = Layout;
 
 const axios = require('axios').default;
 
@@ -27,6 +25,10 @@ const Calculator = () => {
     const [investmentRatioInput, setInvestmentRatioInput] = useState(0)
     const [targetAmountInput, setTargetAmountInput] = useState(0)
     const [targetDate, setTargetDate] = useState()
+    const [remainMonths, setRemainMonths] = useState('xxxx')
+    const [finalAssets, setFinalAssets] = useState('xxxx')
+    const [compareAssets, setCompareAssets] = useState('xxxx')
+    const [compareString, setCompareString] = useState('more')
 
     const handleStartingAssets = () => {
         setStartingAssets(startingAssetsInput)
@@ -49,15 +51,43 @@ const Calculator = () => {
         setTargetAmountInput(e.target.value)
     }
 
-    const handleTargetDateChange = (e) => {
-        console.log(e)
-        setTargetDate(e)
+    const handleTargetDateChange = (date) => {
+        const currentDate = new Date();
+        const selectedDate = date.toDate();
+        const monthsDifference = differenceInMonths(selectedDate, currentDate);
+        setRemainMonths(monthsDifference);
+    }
+
+    const handleFinalAssets = () => {
+        let finalAmount = Number(startingAssets) * 1.0058
+        let loop = remainMonths
+        while (loop > 0) {
+            loop--
+            finalAmount = (finalAmount + Number(monthlyInvestment)) * 1.0058
+        }
+        setFinalAssets(finalAmount.toFixed(2).toString())
+    }
+
+    const handleCompareString = () => {
+        if (Number(finalAssets) >= Number(targetAmountInput))
+            setCompareString('more')
+        else
+            setCompareString('less')
+    }
+
+    const handleCompareAssets = () => {
+        if (Number(finalAssets) >= Number(targetAmountInput))
+            setCompareAssets((Number(finalAssets) - Number(targetAmountInput)).toFixed(2).toString())
+        else
+            setCompareAssets((Number(targetAmountInput) - Number(finalAssets)).toFixed(2).toString())
     }
 
     const handleCalculate = () => {
         handleStartingAssets()
         handleMonthlyInvestment()
-
+        handleFinalAssets()
+        handleCompareString()
+        handleCompareAssets()
     }
 
     const { Title } = Typography;
@@ -116,13 +146,13 @@ const Calculator = () => {
                     <div>
                         <Space wrap>
                             <p>Starting investment assets</p>
-                            <Input placeholder="Input amount" onChange={handleStartingAssetsChange} />
+                            <Input prefix="$" placeholder="Input amount" onChange={handleStartingAssetsChange} />
                         </Space>
                     </div>
                     <div>
                         <Space wrap>
                             <p>Monthly income</p>
-                            <Input placeholder="Input amount" onChange={handleMonthlyIncomeChange} />
+                            <Input prefix="$" placeholder="Input amount" onChange={handleMonthlyIncomeChange} />
                         </Space>
                     </div>
                     <div>
@@ -135,7 +165,7 @@ const Calculator = () => {
                     <div>
                         <Space wrap>
                             <p>Target Amount</p>
-                            <Input placeholder="Input amount" onChange={handleTargetAmountChange} />
+                            <Input prefix="$" placeholder="Input amount" onChange={handleTargetAmountChange} />
                         </Space>
                     </div>
                     <div style={{ marginBottom: '50px' }}>
@@ -155,7 +185,7 @@ const Calculator = () => {
                     <div>
                         <Space wrap>
                             <Title level={4}>Time remain:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>xxxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>{remainMonths}</Title>
                             <Title level={4}>months</Title>
                         </Space>
                     </div>
@@ -171,10 +201,11 @@ const Calculator = () => {
                     <div>
                         <Space wrap>
                             <Title level={4}>Estimated final assets:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
+                            <Title level={4} style={{ color: 'blue' }}>${finalAssets}</Title>
                             <Title level={4}>,</Title>
-                            <Title level={4} style={{ color: 'blue', marginLeft: '50px' }}>$xxxx</Title>
-                            <Title level={4}>more than the target amount.</Title>
+                            <Title level={4} style={{ color: 'blue', marginLeft: '50px' }}>${compareAssets}</Title>
+                            <Title level={4} style={{ color: 'blue' }}>{compareString}</Title>
+                            <Title level={4}>than the target amount.</Title>
                         </Space>
                     </div>
                     <Title level={5} style={{ fontStyle: 'italic' }}>This calculation is based on investing monthly into a market portfolio with a 7% annual return</Title>

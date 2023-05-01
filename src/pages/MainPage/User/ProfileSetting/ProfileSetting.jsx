@@ -55,11 +55,11 @@ const ProfileSetting = () => {
     }
 
     const handleMyNameChange = (e) => { setUserInfo({ ...userInfo, myName: e.target.value }) }
-    const handleMyAgeChange = (e) => { setUserInfo({ ...userInfo, myAge: e.target.value }) }
+    const handleMyAgeChange = (value) => { setUserInfo({ ...userInfo, myAge: value }) }
     const handleIncomeAmountChange = (e) => { setUserInfo({ ...userInfo, incomeAmount: e.target.value }) }
-    const handleIncomeFrequencyChange = (e) => { setUserInfo({ ...userInfo, incomeFrequency: e.target.value }) }
+    const handleIncomeFrequencyChange = (value) => { setUserInfo({ ...userInfo, incomeFrequency: value }) }
     const handleAssetsAmountChange = (e) => { setUserInfo({ ...userInfo, assetsAmount: e.target.value }) }
-    const handleAssetsTypeChange = (e) => { setUserInfo({ ...userInfo, assetsType: e.target.value }) }
+    const handleAssetsTypeChange = (value) => { setUserInfo({ ...userInfo, assetsType: value }) }
     const handleDebtTotalOwedChange = (e) => { setUserInfo({ ...userInfo, debtTotalOwed: e.target.value }) }
     const handleDebtInterestRateChange = (e) => { setUserInfo({ ...userInfo, debtInterestRate: e.target.value }) }
     const handleDebtMonthlyOwedChange = (e) => { setUserInfo({ ...userInfo, debtMonthlyOwed: e.target.value }) }
@@ -102,7 +102,7 @@ const ProfileSetting = () => {
                             <p>Name</p>
                             <Input placeholder="Input name" onChange={handleMyNameChange} />
                             <p>Age</p>
-                            <InputNumber min={0} max={200} defaultValue={18} onChange={handleMyAgeChange} />
+                            <InputNumber min={0} max={200} defaultValue={18} onChange={value => handleMyAgeChange(value)} />
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Income</Title>
@@ -127,7 +127,7 @@ const ProfileSetting = () => {
                                     { value: 'quarterly', label: 'Quarterly' },
                                     { value: 'yearly', label: 'Yearly' }
                                 ]}
-                                onChange={handleIncomeFrequencyChange}
+                                onChange={value => handleIncomeFrequencyChange(value)}
                             />
                         </Space>
                     </div>
@@ -140,7 +140,7 @@ const ProfileSetting = () => {
                             <Input placeholder="Input amount" prefix="$" onChange={handleAssetsAmountChange} />
                             <p>Type</p>
                             <Select
-                                defaultValue="house"
+                                defaultValue="car"
                                 style={{
                                     width: 120,
                                 }}
@@ -151,7 +151,7 @@ const ProfileSetting = () => {
                                     { value: 'shop', label: 'Shop' },
                                     { value: 'virtual_assets', label: 'Virtual assets' }
                                 ]}
-                                onChange={handleAssetsTypeChange}
+                                onChange={value => handleAssetsTypeChange(value)}
                             />
                         </Space>
                     </div>
@@ -163,11 +163,11 @@ const ProfileSetting = () => {
                             <p>Total Owed</p>
                             <Input placeholder="Input amount" prefix="$" onChange={handleDebtTotalOwedChange} />
                             <p>Interest Rate</p>
-                            <Input placeholder="Input rate" onChange={handleDebtInterestRateChange} />
+                            <Input placeholder="Input rate" suffix="%" onChange={handleDebtInterestRateChange} style={{ width: 150 }}/>
                             <p>Monthly Owed</p>
                             <Input placeholder="Input amount" prefix="$" onChange={handleDebtMonthlyOwedChange} />
                             <p>Time Remaining</p>
-                            <Input placeholder="Input time remaining" onChange={handleDebtTimeRemainChange} />
+                            <Input placeholder="Input time remaining" suffix="Days" onChange={handleDebtTimeRemainChange} />
                         </Space>
                     </div>
                     <Title level={4} style={{ color: 'black' }}>Monthly Expenses</Title>

@@ -27,7 +27,7 @@ const BudgetManager = () => {
     const [incomeInput, setIncomeInput] = useState(0)
     const [expenses, setExpenses] = useState('0')
     const [expensesInput, setExpensesInput] = useState(0)
-    const [compareString, setCompareString] = useState('lower than the budget:')
+    const [compareString, setCompareString] = useState('did not exceed')
     const [compareBudget, setCompareBudget] = useState('0')
     const [saving, setSaving] = useState('0')
 
@@ -60,9 +60,9 @@ const BudgetManager = () => {
 
     const handleCompareString = () => {
         if (Number(expenses) <= Number(budget))
-            setCompareString('did not exceed the budget by:')
+            setCompareString('did not exceed')
         else
-            setCompareString('exceeded the budget by:')
+            setCompareString('exceeded')
         handleCompareBudget()
         handleSaving()
     }
@@ -78,62 +78,11 @@ const BudgetManager = () => {
         setSaving((Number(income) - Number(expenses)).toString())
     }
 
-    const addCard = () => {
-        setCards([...cards, (
-            <Card
-                title={`${selectedMonth ? selectedMonth : 'Select a month'} budget`}
-                // extra={<a href="#">More</a>}
-                style={{
-                    width: 1160,
-                }}
-            >
-                <Space direction="vertical">
-                    <Space>
-                        <p>Choose month</p>
-                        <DatePicker onChange={handleMonthChange} picker="month" />
-                        <Space style={{ marginLeft: '200px' }}>
-                            <Title level={4}>Total income this month:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>${income}</Title>
-                        </Space>
-                        <Space style={{ marginLeft: '20px' }}>
-                            <Title level={4}>Budget this month:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>${budget}</Title>
-                        </Space>
-                    </Space>
-                    <Space>
-                        <Space>
-                            <p>Budget</p>
-                            <Input name="budgetInput" prefix="$" placeholder="Input budget this month" onChange={handleBudgetChange} />
-                            <Button type="primary" onClick={handleBudget}>Submit</Button>
-                        </Space>
-                        <Space style={{ marginLeft: '100px' }}>
-                            <Title level={4}>Total living expenses this month:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>${expenses}</Title>
-                        </Space>
-                    </Space>
-                    <Space>
-                        <p>Income</p>
-                        <Input prefix="$" placeholder="Input each income" onChange={handleIncomeChange} />
-                        <Button type="primary" onClick={handleIncome} >Add</Button>
-                        <Space style={{ marginLeft: '120px' }}>
-                            <Title level={4}>This month's expenses {compareString}</Title>
-                            <Title level={4} style={{ color: 'blue' }}>${compareBudget}</Title>
-                        </Space>
-                    </Space>
-                    <Space>
-                        <p>Living Expenses</p>
-                        <Input prefix="$" placeholder="Input each living expenses" onChange={handleExpensesChange} />
-                        <Button type="primary" onClick={handleExpenses} >Add</Button>
-                        <Space style={{ marginLeft: '63px' }}>
-                            <Title level={4}>Remaining savings this month (available for investment):</Title>
-                            <Title level={4} style={{ color: 'blue' }}>${saving}</Title>
-                        </Space>
-                    </Space>
-                    <Button type="primary" onClick={handleCompareString}>Calculate</Button>
-                </Space>
-            </Card>
-        )]);
-    };
+    // const addCard = () => {
+    //     setCards([...cards, (
+            
+    //     )]);
+    // };
 
     const { Title } = Typography;
 
@@ -207,7 +156,9 @@ const BudgetManager = () => {
                                     <Input prefix="$" placeholder="Input each income" onChange={handleIncomeChange} />
                                     <Button type="primary" onClick={handleIncome} >Add</Button>
                                     <Space style={{ marginLeft: '120px' }}>
-                                        <Title level={4}>This month's expenses {compareString}</Title>
+                                        <Title level={4}>This month's expenses</Title>
+                                        <Title level={4} style={{ color: 'blue' }}>{compareString}</Title>
+                                        <Title level={4}>the budget by:</Title>
                                         <Title level={4} style={{ color: 'blue' }}>${compareBudget}</Title>
                                     </Space>
                                 </Space>
@@ -223,7 +174,7 @@ const BudgetManager = () => {
                                 <Button type="primary" onClick={handleCompareString} >Calculate</Button>
                             </Space>
                         </Card>
-                        {cards.map(card => card)}
+                        {/* {cards.map(card => card)} */}
                     </Space>
                     {/* <Button type="primary" onClick={addCard} style={{ marginTop: '20px', marginLeft: '1000px' }}>Add</Button> */}
                 </div>

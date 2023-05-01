@@ -5,8 +5,7 @@ import {
     Layout, theme, Breadcrumb, Typography, Select, Space, DatePicker,
     Input, Button, Card
 } from 'antd';
-import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
-import { StarOutlined } from '@ant-design/icons';
+import { differenceInMonths } from 'date-fns';
 const { Header, Footer, Content, Sider } = Layout;
 
 const axios = require('axios').default;
@@ -34,6 +33,26 @@ const Plan = () => {
     const [endInvestment, setEndInvestment] = useState('xxxx')
     const [riskLevel, setRiskLevel] = useState('no risk')
     const [totalAssets, setTotalAssets] = useState('xxxx')
+    const [remainMonths, setRemainMonths] = useState('xxxx')
+
+    const [planInfo, setPlanInfo] = useState({});
+
+    const storePlanInfo = () => {
+        const planInformation = {
+            startCash: planInfo.startCash,
+            startInvestment: planInfo.startInvestment,
+            totalAssets: planInfo.totalAssets,
+            remainMonths: planInfo.remainMonths
+            // ... other fields
+        };
+        console.log('Plan information:', planInformation);
+        localStorage.setItem('planInfo', JSON.stringify(planInformation));
+    }
+
+    const handleStartCashPlan = () => { setPlanInfo({ ...planInfo, startCash: startCash }) }
+    const handleStartInvestmentPlan = () => { setPlanInfo({ ...planInfo, startInvestment: startInvestment }) }
+    const handleTotalAssetsPlan = () => { setPlanInfo({ ...planInfo, totalAssets: totalAssets }) }
+    const handleRemainMonthsPlan = () => { setPlanInfo({ ...planInfo, remainMonths: remainMonths }) }
 
     const handleMonthlyIncome = () => {
         setMonthlyIncome(monthlyIncomeInput)
@@ -57,6 +76,13 @@ const Plan = () => {
         setAnnualReturnInput(e.target.value)
     }
 
+    const handleTargetDateChange = (date) => {
+        const currentDate = new Date();
+        const selectedDate = date.toDate();
+        const monthsDifference = differenceInMonths(selectedDate, currentDate);
+        setRemainMonths(monthsDifference);
+    }
+
     const handleStartCash = () => {
         setStartCash((Number(monthlyIncome) - Number(monthlyAllocation)).toString())
     }
@@ -64,10 +90,17 @@ const Plan = () => {
         setStartInvestment(monthlyAllocation)
     }
     const handleEndCash = () => {
-        setEndCash()
+        setEndCash((remainMonths * Number(startCash)).toString())
     }
     const handleEndInvestment = () => {
-        setEndInvestment()
+        let endInvestmentAmount = 0;
+        let loop = remainMonths
+        while (loop >= 0) {
+            loop--
+            endInvestmentAmount = (endInvestmentAmount + Number(startInvestment)) * (1 + Number(annualReturnInput) / 1200)
+        }
+
+        setEndInvestment(endInvestmentAmount.toFixed(2).toString())
     }
 
     const handleRiskLevel = () => {
@@ -84,7 +117,7 @@ const Plan = () => {
     }
 
     const handleTotalAssets = () => {
-        setTotalAssets()
+        setTotalAssets((Number(endCash) + Number(endInvestment)).toFixed(2).toString())
     }
 
     const handleSubmit = () => {
@@ -94,90 +127,25 @@ const Plan = () => {
         handleStartCash()
         handleStartInvestment()
         handleRiskLevel()
+        handleEndCash()
+        handleEndInvestment()
+        handleTotalAssets()
+        
+        handleStartCashPlan()
+        handleStartInvestmentPlan()
+        handleTotalAssetsPlan()
+        handleRemainMonthsPlan()
+        storePlanInfo()
     }
 
     let plan_id = 1
 
-    const addCard = () => {
-        plan_id++
-        setCards([...cards, (
-            <Card
-                title={`Plan #${plan_id}`}
-                // extra={<a href="#">More</a>}
-                style={{
-                    width: 1160,
-                }}
-            >
-                <Space direction="vertical">
-                    <Space>
-                        <Space style={{ marginLeft: '20px' }}>
-                            <Title level={4}>Total Monthly income:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
-                        </Space>
-                        <Space style={{ marginLeft: '20px' }}>
-                            <Title level={4}>Remaining disposable cash:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
-                        </Space>
-                        <Space style={{ marginLeft: '20px' }}>
-                            <Title level={4}>Monthly cash allocated:</Title>
-                            <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
-                        </Space>
-                    </Space>
-                    <Space>
-                        <Space>
-                            <p>Monthly Income</p>
-                            <Input name="monthlyIncome" prefix="$" placeholder="Input income this month" />
-                        </Space>
-                        <Space style={{ marginLeft: '20px' }}>
-                            <p>Monthly Allocation</p>
-                            <Input name="monthlyIncome" prefix="$" placeholder="Input income this month" />
-                        </Space>
-                    </Space>
-                    <Space>
-                        <Space>
-                            <p>Annualized return and risk</p>
-                            <Select
-                                defaultValue="low_7"
-                                style={{
-                                    width: 120,
-                                }}
-                                allowClear
-                                options={[
-                                    { value: 'no_3', label: '3% no risk' },
-                                    { value: 'low_7', label: '7% low risk' },
-                                    { value: 'moderate_15', label: '15% moderate risk' },
-                                    { value: 'high_30', label: '30% high risk' }
-                                ]}
-                            />
-                        </Space>
-                        <Space style={{ marginLeft: '20px' }}>
-                            <p>Plan end date</p>
-                            <DatePicker />
-                        </Space>
-                        <Button type="primary" style={{ marginLeft: '100px' }}>Submit</Button>
-                    </Space>
-                    <Space>
-                        <Title level={4} style={{ marginLeft: '270px' }}>At start of plan</Title>
-                        <Title level={4} style={{ marginLeft: '30px' }}>At end of plan</Title>
-                    </Space>
-                    <Space>
-                        <Title level={4} style={{ marginLeft: '70px' }}>CASH Assets:</Title>
-                        <Title level={4} style={{ color: 'blue', marginLeft: '100px' }}>${startCash}</Title>
-                        <Title level={4} style={{ color: 'blue', marginLeft: '100px' }}>${endCash}</Title>
-                    </Space>
-                    <Space>
-                        <Title level={4}>INVESTMENT Assets:</Title>
-                        <Title level={4} style={{ color: 'blue', marginLeft: '100px' }}>${startInvestment}</Title>
-                        <Title level={4} style={{ color: 'blue', marginLeft: '100px' }}>${endInvestment}</Title>
-                    </Space>
-                    <Space>
-                        <Title level={4} style={{ marginLeft: '100px' }}>Total assets at end of plan are:</Title>
-                        <Title level={4} style={{ color: 'blue' }}>$xxxx</Title>
-                    </Space>
-                </Space>
-            </Card>
-        )]);
-    };
+    // const addCard = () => {
+    //     plan_id++
+    //     setCards([...cards, (
+
+    //     )]);
+    // };
 
     const { Title } = Typography;
 
@@ -267,23 +235,26 @@ const Plan = () => {
                                     </Space>
                                     <Space style={{ marginLeft: '20px' }}>
                                         <p>Plan end date</p>
-                                        <DatePicker />
+                                        <DatePicker onChange={handleTargetDateChange} />
                                     </Space>
                                     <Button type="primary" style={{ marginLeft: '100px' }} onClick={handleSubmit}>Submit</Button>
                                 </Space>
                                 <Space>
                                     <Title level={4} style={{ marginLeft: '270px' }}>At start of plan</Title>
                                     <Title level={4} style={{ marginLeft: '30px' }}>At end of plan</Title>
+                                    <Title level={4}>(</Title>
+                                    <Title level={4} style={{ color: 'blue' }}>{remainMonths}</Title>
+                                    <Title level={4}>months)</Title>
                                 </Space>
                                 <Space>
                                     <Title level={4} style={{ marginLeft: '70px' }}>CASH Assets:</Title>
                                     <Title level={4} style={{ color: 'blue', marginLeft: '100px' }}>${startCash}</Title>
-                                    <Title level={4} style={{ color: 'blue', marginLeft: '100px' }}>${endCash}</Title>
+                                    <Title level={4} style={{ color: 'blue', marginLeft: '180px' }}>${endCash}</Title>
                                 </Space>
                                 <Space>
                                     <Title level={4}>INVESTMENT Assets:</Title>
                                     <Title level={4} style={{ color: 'blue', marginLeft: '100px' }}>${startInvestment}</Title>
-                                    <Title level={4} style={{ color: 'blue', marginLeft: '100px' }}>${endInvestment}</Title>
+                                    <Title level={4} style={{ color: 'blue', marginLeft: '180px' }}>${endInvestment}</Title>
                                 </Space>
                                 <Space>
                                     <Title level={4} style={{ marginLeft: '200px' }}>Your plan risk level is:</Title>
@@ -293,7 +264,7 @@ const Plan = () => {
                                 </Space>
                             </Space>
                         </Card>
-                        {cards.map(card => card)}
+                        {/* {cards.map(card => card)} */}
                     </Space>
                     {/* <Button type="primary" onClick={addCard} style={{ marginTop: '20px', marginLeft: '1000px' }}>Add Plan</Button> */}
                 </div>

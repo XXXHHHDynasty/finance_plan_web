@@ -19,11 +19,25 @@ const Home = () => {
   const [current, setCurrent] = useState("1");
   const [data, setData] = useState('');
 
+  const [planInfo, setPlanInfo] = useState({});
+  useEffect(() => {
+    const savedPlanInfo = localStorage.getItem('planInfo');
+    if (savedPlanInfo) {
+      setPlanInfo(JSON.parse(savedPlanInfo));
+    }
+  }, []);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   const location = useLocation();
+
+  // navigate to 'budgetManager' page
+  const goBudgetManager = () => {
+    setCurrent("1")
+    navigate('/budgetManager', {})
+  }
 
   // navigate to 'calculator' page
   const goCalculator = () => {
@@ -35,6 +49,12 @@ const Home = () => {
   const goPlan = () => {
     setCurrent("1")
     navigate('/plan', {})
+  }
+
+  // navigate to 'calculator' page
+  const goUserProfile = () => {
+    setCurrent("1")
+    navigate('/userProfile', {})
   }
 
   const onFinish = () => {
@@ -76,16 +96,16 @@ const Home = () => {
         </Breadcrumb>
         <Carousel autoplay>
           <div>
-            <h3 style={carouselStyle}>Nav 1</h3>
+            <h3 style={carouselStyle} onClick={goBudgetManager}>Budget Manager</h3>
           </div>
           <div>
-            <h3 style={carouselStyle}>Nav 2</h3>
+            <h3 style={carouselStyle} onClick={goCalculator}>Investment Calculator</h3>
           </div>
           <div>
-            <h3 style={carouselStyle}>Nav 3</h3>
+            <h3 style={carouselStyle} onClick={goPlan}>Investment Plan</h3>
           </div>
           <div>
-            <h3 style={carouselStyle}>Nav 4</h3>
+            <h3 style={carouselStyle} onClick={goUserProfile}>User Profile</h3>
           </div>
         </Carousel>
         <div
@@ -99,23 +119,23 @@ const Home = () => {
             <div style={{ flex: 1 }}>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Statistic title="Account Balance (USD)" value={11289} precision={2} />
+                  <Statistic title="Account Balance (USD)" value={Number(planInfo.startCash) + Number(planInfo.startInvestment) || 12000} precision={2} />
                 </Col>
                 <Col span={12}>
-                  <Statistic title="Investment Assets (USD)" value={3700} precision={2} />
+                  <Statistic title="Investment Assets (USD)" value={Number(planInfo.startInvestment) || 2000} precision={2} />
                 </Col>
               </Row>
             </div>
             <div style={{ flex: 1 }}>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Statistic title="Target Amount (USD)" value={50000} precision={2} />
+                  <Statistic title="Target Amount (USD)" value={Number(planInfo.totalAssets) || 30000} precision={2} />
                   <Button style={{ marginTop: 16 }} type="primary" onClick={goPlan}>
                     Reset
                   </Button>
                 </Col>
                 <Col span={12}>
-                  <Countdown title="Target Date Countdown" value={deadline} format="D [days] H [hrs] m [mins] s [secs]" />
+                  <Countdown title="Target Date Countdown" value={Date.now() + dayToMsec * 30 * Number(planInfo.remainMonths) || deadline} format="D [days] H [hrs] m [mins] s [secs]" />
                   <Button style={{ marginTop: 16 }} type="primary" onClick={goPlan}>
                     Reset
                   </Button>
